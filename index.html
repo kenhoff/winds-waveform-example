@@ -36,10 +36,12 @@
     </head>
     <body>
         <h1>Winds Waveform Example</h1>
-        <p>Hi there! I'm <a href="https://ken.hoff.tech/">Ken Hoff</a>. I work at <a href="https://getstream.io/">GetStream.io</a>. I made this dumb fun little waveform visualization thing for Winds 2.0, an RSS reader and podcast app.</p>
+        <p>Hi there! I'm
+            <a href="https://ken.hoff.tech/">Ken Hoff</a>. I work at
+            <a href="https://getstream.io/">GetStream.io</a>. I made this dumb fun little waveform visualization thing for Winds 2.0, an RSS reader and podcast app.</p>
 
         <!-- this SVG is the "background" and progress bar -->
-        <svg viewBox="0 0 100 100" class="waveform-container" preserveAspectRatio="none">
+        <svg viewbox="0 0 100 100" class="waveform-container" preserveaspectratio="none">
             <rect class="waveform-bg" x="0" y="0" height="100" width="100"/>
             <rect id="waveform-progress" class="waveform-progress" x="0" y="0" height="100" width="0"/>
         </svg>
@@ -47,7 +49,7 @@
         <!-- this SVG is the "clipping mask" - the waveform bars -->
         <svg height="0" width="0">
             <defs>
-                <clipPath id="waveform-mask"></clipPath>
+                <clippath id="waveform-mask"></clippath>
             </defs>
         </svg>
 
@@ -65,7 +67,6 @@
 
                 audioCtx.decodeAudioData(audioData, buffer => {
                     decodedAudioData = buffer.getChannelData(0);
-
                     let bucketDataSize = Math.floor(decodedAudioData.length / NUMBER_OF_BUCKETS,);
                     let buckets = [];
                     for (var i = 0; i < NUMBER_OF_BUCKETS; i++) {
@@ -108,9 +109,6 @@
                 // catch any errors with fetching the audio
                 console.log(err);
             });
-
-            // setInterval(() => {     this.setState({         percentComplete: (this.state.percentComplete + 0.1) % 100     }); }, 100); {     props.buckets.map((bucketValue, i, buckets) => {         let bucketSVGWidth = 100.0 / buckets.length;         let
-            // bucketSVGHeight = bucketValue * 100.0;         return (<rect key={i} x={bucketSVGWidth * i + SPACE_BETWEEN_BARS / 2.0} y={(100 - bucketSVGHeight) / 2.0} width={bucketSVGWidth - props.spaceBetweenBars} height={bucketSVGHeight}/>);     }) }
         </script>
     </body>
 </html>
