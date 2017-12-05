@@ -62,7 +62,7 @@
 
             let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-            axios({url: '/bluegrass.mp3', responseType: 'arraybuffer'}).then(response => {
+            axios({url: "bluegrass.mp3", responseType: "arraybuffer"}).then(response => {
                 let audioData = response.data;
 
                 audioCtx.decodeAudioData(audioData, buffer => {
