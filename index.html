@@ -54,7 +54,7 @@
         </svg>
 
         <!-- our audio element -->
-        <audio id="audio-element" src="/bluegrass.mp3" controls="controls"></audio>
+        <audio id="audio-element" src="bluegrass.mp3" controls="controls"></audio>
 
         <script type="text/javascript">
             const NUMBER_OF_BUCKETS = 100; // number of "bars" the waveform should have
@@ -62,7 +62,7 @@
 
             let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-            axios({url: "/bluegrass.mp3", responseType: "arraybuffer"}).then(response => {
+            axios({url: "bluegrass.mp3", responseType: "arraybuffer"}).then(response => {
                 var audioData = response.data;
 
                 audioCtx.decodeAudioData(audioData, buffer => {
