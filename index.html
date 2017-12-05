@@ -40,6 +40,9 @@
             <a href="https://ken.hoff.tech/">Ken Hoff</a>. I work at
             <a href="https://getstream.io/">GetStream.io</a>. I made this dumb fun little waveform visualization thing for Winds 2.0, an RSS reader and podcast app.</p>
 
+        <!-- our audio element -->
+        <audio id="audio-element" src="/bluegrass.mp3" controls="controls"></audio>
+
         <!-- this SVG is the "background" and progress bar -->
         <svg viewbox="0 0 100 100" class="waveform-container" preserveaspectratio="none">
             <rect class="waveform-bg" x="0" y="0" height="100" width="100"/>
@@ -53,21 +56,18 @@
             </defs>
         </svg>
 
-        <!-- our audio element -->
-        <audio id="audio-element" src="/bluegrass.mp3" controls="controls"></audio>
-
         <script type="text/javascript">
             const NUMBER_OF_BUCKETS = 100; // number of "bars" the waveform should have
             const SPACE_BETWEEN_BARS = 0.2; // from 0 (no gaps between bars) to 1 (only gaps - bars won't be visible)
 
             let audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
-            axios({url: "/bluegrass.mp3", responseType: "arraybuffer"}).then(response => {
-                var audioData = response.data;
+            axios({url: '/bluegrass.mp3', responseType: 'arraybuffer'}).then(response => {
+                let audioData = response.data;
 
                 audioCtx.decodeAudioData(audioData, buffer => {
                     decodedAudioData = buffer.getChannelData(0);
-                    let bucketDataSize = Math.floor(decodedAudioData.length / NUMBER_OF_BUCKETS,);
+                    let bucketDataSize = Math.floor(decodedAudioData.length / NUMBER_OF_BUCKETS);
                     let buckets = [];
                     for (var i = 0; i < NUMBER_OF_BUCKETS; i++) {
                         let startingPoint = i * bucketDataSize;
@@ -82,7 +82,7 @@
                         buckets.push(size / 2);
                     }
 
-                    document.getElementById("waveform-mask").innerHTML = buckets.map((bucket, i) => {
+                    document.getElementById('waveform-mask').innerHTML = buckets.map((bucket, i) => {
                         let bucketSVGWidth = 100.0 / buckets.length;
                         let bucketSVGHeight = bucket * 100.0;
 
@@ -91,19 +91,18 @@
                             y=${ (100 - bucketSVGHeight) / 2.0}
                             width=${bucketSVGWidth - SPACE_BETWEEN_BARS}
                             height=${bucketSVGHeight} />`;
-                    }).join("");
+                    }).join('');
 
-                    let audioElement = document.getElementById("audio-element");
-                    let waveformProgress = document.getElementById("waveform-progress")
+                    let audioElement = document.getElementById('audio-element');
+                    let waveformProgress = document.getElementById('waveform-progress');
 
                     // every 100 milliseconds, update the waveform-progress SVG with a new width - the percentage of time elapsed on the audio file
                     setInterval(() => {
-                        waveformProgress.setAttribute("width", (audioElement.currentTime / audioElement.duration) * 100)
+                        waveformProgress.setAttribute('width', audioElement.currentTime / audioElement.duration * 100);
                     }, 100);
-
                 }, e => {
                     // callback for any errors with decoding audio data
-                    console.log("Error with decoding audio data" + e.err);
+                    console.log('Error with decoding audio data' + e.err);
                 },);
             }).catch(err => {
                 // catch any errors with fetching the audio
